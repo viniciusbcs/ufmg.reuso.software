@@ -15,11 +15,8 @@ package br.ufmg.reuso.negocio.baralho;
  */
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import java.util.Properties;
 import java.util.Random;
 
 import br.ufmg.reuso.dados.carta.RepositorioCarta;
@@ -33,10 +30,6 @@ import br.ufmg.reuso.negocio.jogo.ModeGameConstants;
 public class BaralhoCartas 
 {
 	private Carta[] baralho;
-	private FileInputStream arquivoEntrada;
-	private Properties arquivoProperties;
-
-
 	private int numeroTotalCartas;										// contem o número de cartas total do jogo 
 	private int numeroTotalEngenheiro;
 	private int numeroTotalProblemas;
@@ -44,6 +37,9 @@ public class BaralhoCartas
 	private int numeroCartasBaralhoAtual;								// contem o numero de cartas que o baralho tem no decorrer do jogo
 	private int currentCard;											/** índice da próxima carta a ser distribuída durante o jogo.*/
 
+	/**
+	 * Reuso de Software 2016 - Código Adicionado
+	 */
 	private RepositorioCarta repositorio = new RepositorioCarta();
 
 	public BaralhoCartas(String facilidade,int[] cartasConceito,int [] cartasProblema)
@@ -114,9 +110,11 @@ public class BaralhoCartas
 
 	public CartaBonificacao[] inicializarCartasConceito(String dificuldade, int[] cartasConceitoSelecionadas)
 	{
-		File pastaCartasConceito = new File(dificuldade);						/**buscando diretorio da pasta que contém os aquivos de cartas conceito*/
-		String[] arquivosDiretorio;												
-		arquivosDiretorio = pastaCartasConceito.list();							/**preenhendo um vetor de string com nome dos arquivos do diretorio*/
+		/**
+		 * Reuso de Software 2016 - Código Modificado
+		 */
+		String[] arquivosDiretorio = repositorio.getNomeArquivosPasta(dificuldade);	
+		/**preenhendo um vetor de string com nome dos arquivos do diretorio*/
 
 		ArrayList <String> somenteArquivosProperties = new ArrayList <String>();;
 		for (int i=0;i<arquivosDiretorio.length;i++)
@@ -127,7 +125,6 @@ public class BaralhoCartas
 
 		setNumeroTotalConceito(somenteArquivosProperties.size());						/**numero de cartas conceito total que o baralho terá*/
 		CartaBonificacao [] cartaconceito = new CartaBonificacao[getNumeroTotalConceito()];	/**vetor que aloja cartas conceito do jogo*/
-		this.arquivoProperties = new Properties();
 
 		for(int i=0;i<somenteArquivosProperties.size();i++)								/**irá abrir todos os arquivos e extrair dados deles*/
 		{
@@ -135,6 +132,9 @@ public class BaralhoCartas
 			try
 			{
 				/**construindo a carta com dados do arquivo cujo nome está na posicao i do vetor de arquivos do diretorio*/
+				/**
+				 * Reuso de Software 2016 - Código Modificado
+				 */
 				cartaconceito[i] = repositorio.obterCartaConceito(dificuldade + File.separator + somenteArquivosProperties.get(i));; 	
 
 
@@ -171,6 +171,9 @@ public class BaralhoCartas
 
 	public CartaPenalizacao[] inicializarCartasProblemas(String dificuldade,int [] cartasProblemaSelecionadas)
 	{
+		/**
+		 * Reuso de Software 2016 - Código Modificado
+		 */
 		String[] arquivosDiretorio = repositorio.getNomeArquivosPasta(dificuldade);							//preenhendo um vetor de string com nome dos arquivos do diretorio
 
 		ArrayList <String> somenteArquivosProperties = new ArrayList <String>();;
@@ -183,12 +186,14 @@ public class BaralhoCartas
 		setNumeroTotalProblemas(somenteArquivosProperties.size());				/**numero de cartas conceito total que o baralho terá*/
 
 		CartaPenalizacao [] cartaproblema = new CartaPenalizacao[getNumeroTotalProblemas()];	/**vetor que aloja cartas problema do jogo*/
-		this.arquivoProperties = new Properties();
 
 		for(int i=0;i<somenteArquivosProperties.size();i++)								/**irá abrir todos os arquivos e extrair dados deles*/
 		{
 			try
 			{
+				/**
+				 * Reuso de Software 2016 - Código Modificado
+				 */
 				/**construindo a carta com dados do arquivo cujo nome está na posicao i do vetor de arquivos do diretorio*/	
 				cartaproblema[i] = repositorio.obterCartaPenalizacao(dificuldade + File.separator + somenteArquivosProperties.get(i));
 			}
@@ -224,9 +229,10 @@ public class BaralhoCartas
 
 	public CartaEngenheiro[] inicializarCartasEngenheiro(String dificuldade)
 	{
-		File pastaCartasConceito = new File(dificuldade);						//buscando diretorio da pasta que contém os aquivos de cartas de engenheiro
-		String[] arquivosDiretorio;												
-		arquivosDiretorio = pastaCartasConceito.list();							//preenhendo um vetor de string com nome dos arquivos do diretorio
+		/**
+		 * Reuso de Software 2016 - Código Modificado
+		 */
+		String[] arquivosDiretorio = repositorio.getNomeArquivosPasta(dificuldade);	
 
 		ArrayList <String> somenteArquivosProperties = new ArrayList <String>();;
 		for (int i=0;i<arquivosDiretorio.length;i++)
@@ -237,25 +243,15 @@ public class BaralhoCartas
 
 		setNumeroTotalEngenheiro(somenteArquivosProperties.size());				/**numero de cartas de engenheiros total que o baralho terá*/
 		CartaEngenheiro[] cartaengenheiro = new CartaEngenheiro[getNumeroTotalEngenheiro()];			/**vetor de todas as cartas de engenheiro*/
-		this.arquivoProperties = new Properties();
 
 		for(int i=0;i<somenteArquivosProperties.size();i++)								/**irá abrir todos os arquivos e extrair dados deles*/
 		{
-			try		/**tentativa de abrir arquivo cujo nome está na posicao i do vertor de arquivos do diretório*/
-			{
-				this.arquivoEntrada = new FileInputStream( dificuldade + File.separator + somenteArquivosProperties.get(i)); /** abrindo o arquivo cujo nome está na posicao i do vetor de arquivos properties*/
-				arquivoProperties.load(arquivoEntrada);
-				arquivoEntrada.close();									/**fechando o arquivo de entrada*/
-			}
-			catch(IOException ioException)			/**se arquivo nao encontrado, há problema*/
-			{
-				System.out.println("\nIOException: linha 187 da classe BaralhoCartas");
-				System.exit(1);											/**jogo termina sem êxito devido ao problema*/
-			}
+			/**
+			 * Reuso de Software 2016 - Código Modificado
+			 */
 			try
 			{
-				cartaengenheiro[i]= new CartaEngenheiro(arquivoProperties.getProperty("codigo"),arquivoProperties.getProperty("texto"),arquivoProperties.getProperty("nome"),
-						Integer.parseInt(arquivoProperties.getProperty("salario")),Integer.parseInt(arquivoProperties.getProperty("habilidade")),Integer.parseInt(arquivoProperties.getProperty("maturidade"))); /**construindo a carta com dados do arquivo cujo nome está na posicao i do vetor de arquivos do diretorio*/	
+				cartaengenheiro[i]= repositorio.obterCartaEngenheiro(dificuldade + File.separator + somenteArquivosProperties.get(i)); /**construindo a carta com dados do arquivo cujo nome está na posicao i do vetor de arquivos do diretorio*/	
 			}
 			catch (NoSuchElementException noSuchElementException)		/**se os dados estiverem fora do formato ou se não haver mais dados para saída, há problema*/
 			{
@@ -264,7 +260,6 @@ public class BaralhoCartas
 		}										
 		return cartaengenheiro;
 	}
-
 
 	public void embaralharInicial()	//vai deixar as cartas de engenheiro retiradas do baralho nas ultimas posições e embaralhar o baralho restante.
 	{

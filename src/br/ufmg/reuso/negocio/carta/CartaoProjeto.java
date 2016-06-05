@@ -16,12 +16,10 @@ package br.ufmg.reuso.negocio.carta;
 
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.NoSuchElementException;
-import java.util.Properties;
 import java.util.Random;
 
+import br.ufmg.reuso.dados.carta.RepositorioCartaoProjeto;
 import br.ufmg.reuso.negocio.jogo.Jogo;
 import br.ufmg.reuso.negocio.mesa.Modulo;
 import br.ufmg.reuso.ui.ScreenControl;
@@ -38,15 +36,23 @@ public class CartaoProjeto
 	private String texto;
 	private String referenciaBibliografica;
 	private Modulo[] modulos;
-	private FileInputStream arquivoEntrada;
-	private Properties arquivoProperties;
+	/**
+	 * Reuso de Software 2016 - Código Adicionado
+	 */
+	private RepositorioCartaoProjeto repositorio = new RepositorioCartaoProjeto();
 
-	
+	public CartaoProjeto(String codigo, String titulo, String texto, String referenciaBibliografica)
+	{
+		this.codigo = codigo;
+		this.titulo = titulo;
+		this.referenciaBibliografica = referenciaBibliografica;
+	}
+
 	public CartaoProjeto(String facilidade)
 	{
 		definirProjeto(facilidade);
 	}
-	
+
 	public void definirProjeto(String facilidade)
 	{
 
@@ -59,7 +65,7 @@ public class CartaoProjeto
 			if (this.qualidade==0)							// caso qualidade seja zero 
 				setQualidade(1);							// ela é configurada como 1, para ter qualidade mínima
 			setOrcamento((sorteio.nextInt(31)+150));		// definindo orçamento de 150 a 180 
-			
+
 			modulos= new Modulo[getTamanho()];				// criando o número de módulos conforme o tamanho do projeto
 			for (int i=0;i<modulos.length;i++)
 				modulos[i] = new Modulo();					// construindo os módulos
@@ -72,7 +78,7 @@ public class CartaoProjeto
 				modulos[contador].setRastros((sorteio.nextInt(2)+1));
 				modulos[contador].setAjudas((sorteio.nextInt(2)+1));
 			}															//fim do preenchimento do módulo
-			
+
 		}
 		if (facilidade.equals(Jogo.MODERADO))
 		{
@@ -83,7 +89,7 @@ public class CartaoProjeto
 			if (this.qualidade<2)							// caso qualidade seja zero 
 				setQualidade(2);							// ela é configurada como 1
 			setOrcamento((sorteio.nextInt(21)+190)); 		// definindo orçamento de 190 a 210
-			
+
 			modulos= new Modulo[getTamanho()];										// criando o número de módulos conforme o tamanho do projeto
 			for (int i=0;i<modulos.length;i++)
 				modulos[i] = new Modulo();											// construindo os módulos
@@ -96,76 +102,67 @@ public class CartaoProjeto
 				modulos[contador].setRastros((sorteio.nextInt(3)+1));
 				modulos[contador].setAjudas((sorteio.nextInt(3)+1));
 			}																		//fim do preenchimento do módulo
-			
+
 		}
 		if (facilidade.equals(Jogo.DIFICIL))
 		{
-	
-			File pastaCartaoProjeto = new File(PATH);								// buscando diretorio da pasta que contém os aquivos de projeto
-			String[] arquivosDiretorio;												
-			arquivosDiretorio = pastaCartaoProjeto.list();							// preenhendo um vetor de string com nome dos arquivos do diretorio
-			this.arquivoProperties = new Properties();
-			
+			/**
+			 * Reuso de Software 2016 - Código Modificado
+			 */
+			String[] arquivosDiretorio = repositorio.getNomeArquivosPasta(PATH);	
+
 			Random sorteio = new Random();          								// variável para conferir valores aleatórios
 			int projetoSorteado = sorteio.nextInt(arquivosDiretorio.length);		// sorteia um valor que siginificará o projeto a ser selecionado para o jogo 
-			
-			 
-			try		//tentativa de abrir o arquivo selecionado
+
+
+			CartaoProjeto c = null;
+			int sentinela = -1;
+			int controlador = 0;
+			while (sentinela ==-1)
 			{
-				int sentinela = -1;
-				int controlador = 0;
-				while (sentinela ==-1)
+
+				if(arquivosDiretorio[projetoSorteado].endsWith(".properties"))	/**testando se arquivo é .properties*/
+					sentinela=0;												/**atualiza sentinela para sair do while*/
+				else
 				{
-					
-					if(arquivosDiretorio[projetoSorteado].endsWith(".properties"))	/**testando se arquivo é .properties*/
-						sentinela=0;												/**atualiza sentinela para sair do while*/
-					else
-					{
-						controlador++;
-						projetoSorteado = sorteio.nextInt(arquivosDiretorio.length);/**sorteia um número novamente*/
-					}
-					if (controlador>=arquivosDiretorio.length)						
-						sentinela=0;												/**se chegar aqui, significa que pasta não tem arquivo propesties*/
+					controlador++;
+					projetoSorteado = sorteio.nextInt(arquivosDiretorio.length);/**sorteia um número novamente*/
 				}
-				if (!ScreenControl.nomeProjeto.equals("padrao")){
-					this.arquivoEntrada = new FileInputStream( PATH + File.separator + ScreenControl.nomeProjeto); // abrindo o arquivo selecionado
-					arquivoProperties.load(arquivoEntrada);
-					arquivoEntrada.close();		
-				}else{
-					this.arquivoEntrada = new FileInputStream( PATH + File.separator + arquivosDiretorio[projetoSorteado]); // abrindo o arquivo selecionado
-					arquivoProperties.load(arquivoEntrada);
-					arquivoEntrada.close();									/**fechando o arquivo de entrada*/
-				}
+				if (controlador>=arquivosDiretorio.length)						
+					sentinela=0;												/**se chegar aqui, significa que pasta não tem arquivo propesties*/
 			}
-			catch(IOException ioException)			//se arquivo nao encontrado, há problema
-			{
-				System.out.println("\nIOException: linha 126 da classe CartãoProjeto");
-				System.exit(1);											//jogo termina sem êxito devido ao problema
+			/**
+			 * Reuso de Software 2016 - Código Modificado
+			 */
+			if (!ScreenControl.nomeProjeto.equals("padrao")){
+				c = repositorio.obterCartaoProjeto(PATH + File.separator + ScreenControl.nomeProjeto);	
+			}else{
+				c = repositorio.obterCartaoProjeto(PATH + File.separator + arquivosDiretorio[projetoSorteado]);
 			}
-			
+
 			try		//tentativa de leitura e abstração de dados dos arquivos
 			{
-				setCodigo(arquivoProperties.getProperty("codigo"));		/** lendo o valor da chave codigo do arquivo e inserindo dados lidos em no campo codigo*/
-				setTitulo(arquivoProperties.getProperty("titulo"));		/** lendo o valor da chave codigo do arquivo e inserindo dados lidos em no campo titulo*/
-				setTexto(arquivoProperties.getProperty("texto"));		/** lendo o valor da chave codigo do arquivo e inserindo dados lidos em no campo texto*/
-				setReferenciaBibliografica(arquivoProperties.getProperty("referenciaBibliografica"));	/** lendo o valor da chave codigo do arquivo e inserindo dados lidos em no campo referenciaBibliografica*/
+				setCodigo(c.getCodigo());		/** lendo o valor da chave codigo do arquivo e inserindo dados lidos em no campo codigo*/
+				setTitulo(c.getTitulo());		/** lendo o valor da chave codigo do arquivo e inserindo dados lidos em no campo titulo*/
+				setTexto(c.getTexto());		/** lendo o valor da chave codigo do arquivo e inserindo dados lidos em no campo texto*/
+				setReferenciaBibliografica(c.getReferenciaBibliografica());	/** lendo o valor da chave codigo do arquivo e inserindo dados lidos em no campo referenciaBibliografica*/
 			}
 			catch (NoSuchElementException noSuchElementException)		//se os dados estiverem fora do formato ou se não haver mais dados para saída, há problema
 			{
 				System.exit(1);											//jogo termina sem êxito devido ao problema
 			}
-			
-			
-			
+
+
+
 			setComplexidade(4);											// definindo complexidade do projeto com valor igual a 4
 			setTamanho((sorteio.nextInt(3)+3));							// definindo tamanho do projeto com valores de 3 a 5
 			setQualidade((sorteio.nextInt(getTamanho())));  			// definindo qualidade do projeto conforme tamnho do projeto
 			if (this.qualidade<3)										// caso qualidade seja zero 
 				setQualidade(3);										// ela é configurada como 1
 			setOrcamento((sorteio.nextInt(21)+230));					// definindo orçamento de 230 a 250
-			
+
 			modulos= new Modulo[getTamanho()];							// criando o número de módulos conforme o tamanho do projeto
-/*IMP*/		for (int i=0;i<modulos.length;i++)
+			/*IMP*/		for (int i=0;i<modulos.length;i++)
 				modulos[i] = new Modulo();								// construindo os módulos
 			int contador;												// controla o número do módulo para preenchimento
 			for (contador = 0;contador <getTamanho(); contador++)		//preenche o módulo
@@ -176,16 +173,16 @@ public class CartaoProjeto
 				modulos[contador].setRastros((sorteio.nextInt(3)+2));
 				modulos[contador].setAjudas((sorteio.nextInt(3)+2));
 			}															//fim do preenchimento do módulo
-			
+
 		}
-		
+
 	}
-	
-	
-		
-	
-	
-	
+
+
+
+
+
+
 	public int getComplexidade() 
 	{
 		return complexidade;
@@ -225,7 +222,7 @@ public class CartaoProjeto
 	{
 		while ((orcamento%10)!=0) 	//garante que orçamento é um número divisível por 10 
 		{
-		orcamento++;
+			orcamento++;
 		}
 		this.orcamento = orcamento;
 	}
@@ -239,7 +236,7 @@ public class CartaoProjeto
 	{
 		this.texto = texto;
 	}
-	
+
 	public String getCodigo() 
 	{
 		return codigo;
@@ -279,6 +276,6 @@ public class CartaoProjeto
 	{
 		this.modulos = modulos;
 	}
-	
-	
+
+
 }
