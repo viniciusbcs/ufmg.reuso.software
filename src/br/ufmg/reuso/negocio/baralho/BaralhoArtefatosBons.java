@@ -9,15 +9,15 @@
 
 package br.ufmg.reuso.negocio.baralho;
 
-/**
- * @author Michael David
- *
- */
-
 import java.util.Random;
 
 import br.ufmg.reuso.negocio.carta.Artefato;
 
+/**
+ * @author Michael David
+ * modificado por Marina (trabalho de reuso de software 2016/1):
+ * herdando da classe abstrata BaralhoArtefatos
+ */
 public class BaralhoArtefatosBons extends BaralhoArtefatos {
 
 	private static final double PERCENTUAL_ARTEFATOS_RUINS_QUALIDADE_BOA = 0.2;
