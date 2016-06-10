@@ -26,10 +26,10 @@ public aspect LoggingAspect {
 	pointcut iniciouJogo() : call(void Jogo.start(..) );
 	
 	before() : iniciouJogo() {
-		JOptionPane.showMessageDialog( null,				// posicao default, no centro da tela
-				"Início do Jogo - SimulES\n >> Grupo 4 <<",	// mensagem a ser exibida
-				"[AS] - SimulES - Grupo 4!",			// titulo da janela
-				JOptionPane.INFORMATION_MESSAGE);		// tipo do icone a ser exibido
+		JOptionPane.showMessageDialog( null,					// posicao default, no centro da tela
+				"Início do Jogo - SimulES\n >> Grupo DGJM <<",	// mensagem a ser exibida
+				"[AS] - SimulES",					// titulo da janela
+				JOptionPane.INFORMATION_MESSAGE);				// tipo do icone a ser exibido
 	}
 	
 	// ***** pointcut criouJogador ****************************************************** //

@@ -80,7 +80,7 @@ public class ScreenResultDice extends JDialog implements ActionListener {
 		Tpanel.add(labelMensege);
 
 		// Rótulo com Resultado
-		JLabel LabelInfo = new JLabel(Integer.toString(resultDices) + "!",
+		JLabel LabelInfo = new JLabel(Integer.toString(resultDices),// + "!",
 				JLabel.CENTER);
 		Font font = new Font("Default", Font.BOLD, 120);
 		LabelInfo.setFont(font);
