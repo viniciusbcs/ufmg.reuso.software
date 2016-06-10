@@ -192,7 +192,7 @@ public final class Jogo {
 	public void configurarJogo(String facilidade, String[] nomeJogadores, int[] cartasConceito, int[] cartasProblema) {
 
 		/* F�brica de Baralhos de Artefatos */
-		AbstractCreatorBaralhoArtefatos fabricaBaralhoArtefatos = CreatorBaralhoArtefatos.getInstance();
+		AbstractCreatorBaralhoArtefatos fabricaBaralhoArtefatos = new CreatorBaralhoArtefatos();
 
 		this.baralhoCartas = new BaralhoCartas[2];
 		this.baralhoArtefatosBons = new BaralhoArtefatosBons[2];
