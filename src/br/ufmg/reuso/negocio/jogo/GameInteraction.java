@@ -9,17 +9,18 @@
 
 package br.ufmg.reuso.negocio.jogo;
 
-/**
- * @author Michael David
- *
- */
-
 import br.ufmg.reuso.negocio.carta.Carta;
+//#ifdef ConceptCard
 import br.ufmg.reuso.negocio.carta.CartaBonificacao;
+//#endif
 import br.ufmg.reuso.negocio.carta.CartaEngenheiro;
 import br.ufmg.reuso.negocio.carta.CartaPenalizacao;
 import br.ufmg.reuso.negocio.jogador.Jogador;
 
+/**
+ * @author Michael David
+ *
+ */
 public interface GameInteraction  
 {
 	
@@ -81,8 +82,10 @@ public interface GameInteraction
 	/**public void selecionarOponente();	método exclusivo da GUI*/
 
 	
+	//#ifdef ConceptCard
 	/**Utiliza carta conceito da mão do jogador e insere efeito oriundo da respectiva carta no tabuleiro do jogador*/
 	public Jogador inserirBeneficio(Jogo jogoAtual, Jogador jogadorAtual, CartaBonificacao cartaUtilizada);
+	//#endif
 	
 	  
 	/**Utiliza carta problema da mão do jogadorAtual e insere efeito oriundo da respectiva carta no tabuleiro do jogadorAlvo*/

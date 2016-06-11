@@ -33,7 +33,9 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import br.ufmg.reuso.negocio.carta.Carta;
+//#ifdef ConceptCard
 import br.ufmg.reuso.negocio.carta.CartaBonificacao;
+//#endif
 import br.ufmg.reuso.negocio.carta.CartaEngenheiro;
 import br.ufmg.reuso.negocio.carta.CartaPenalizacao;
 
@@ -256,7 +258,7 @@ public class ComponentCard extends JPanel {
 			}
 
 		}
-
+		//#ifdef ConceptCard
 		else if (card instanceof CartaBonificacao) {
 			{
 				CartaBonificacao cartaConceito = (CartaBonificacao) card;
@@ -286,7 +288,7 @@ public class ComponentCard extends JPanel {
 			}
 
 		}
-
+		//#endif
 		else if (card instanceof CartaPenalizacao) {
 
 			{
@@ -428,7 +430,9 @@ public class ComponentCard extends JPanel {
 			height = mySize.height * 7 / 100;
 			lblMaturitValue.setBounds(x, y, width, height);
 
-		} else if (card instanceof CartaBonificacao) {
+		}
+		//#ifdef ConceptCard
+		else if (card instanceof CartaBonificacao) {
 
 			y += height + ygap;
 			x = xgap;
@@ -442,7 +446,9 @@ public class ComponentCard extends JPanel {
 			height = mySize.height * 40 / 100;
 			sliderPaneDesc.setBounds(x, y, width, height);
 
-		} else if (card instanceof CartaPenalizacao) {
+		}
+		//#endif
+		else if (card instanceof CartaPenalizacao) {
 
 			y += height + ygap;
 			x = xgap;

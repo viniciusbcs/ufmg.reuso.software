@@ -11,7 +11,9 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import br.ufmg.reuso.negocio.carta.Carta;
+//#ifdef ConceptCard
 import br.ufmg.reuso.negocio.carta.CartaBonificacao;
+//#endif
 import br.ufmg.reuso.negocio.carta.CartaEngenheiro;
 import br.ufmg.reuso.negocio.carta.CartaPenalizacao;
 
@@ -192,14 +194,15 @@ public class ScreenCard extends JDialog {
 										1, 0, 1, 0, 26, 0, 0, 0), tabuleiro)
 								.getReturn());
 
-				System.out
-						.println(createAndShowCard(
+				//#ifdef ConceptCard
+				System.out.println(createAndShowCard(
 								new CartaBonificacao(
 										"Gerador de Código",
 										"CCD3",
 										"Benefício Permanente: Use essa carta para adicionar, em cada rodada, Use essa carta para adicionar, em cada rodada, 1 Use essa carta para adicionar, em cada rodada, 1 Use essa carta para adicionar, em cada rodada, 1 Use essa carta para adicionar, em cada rodada, 1 Use essa carta para adicionar, em cada rodada, 1 Use essa carta para adicionar, em cada rodada, 1 1 artefato de código branco para um engenheiro.",
 										"[Budinsky et al. 1996]", 10000, 10,
 										19, 0, 1, 0), tabuleiro).getReturn());
+				//#endif
 
 			}
 		});

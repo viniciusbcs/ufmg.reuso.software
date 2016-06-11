@@ -9,18 +9,19 @@
 
 package br.ufmg.reuso.negocio.tabuleiro;
 
-/**
- * @author Michael David
- *
- */
-
+//#ifdef ConceptCard
 import br.ufmg.reuso.negocio.carta.CartaBonificacao;
+//#endif
 import br.ufmg.reuso.negocio.carta.CartaPenalizacao;
 import br.ufmg.reuso.negocio.carta.CartaoProjeto;
 import br.ufmg.reuso.negocio.jogador.Jogador;
 import br.ufmg.reuso.negocio.jogo.Jogo;
 import br.ufmg.reuso.negocio.mesa.Modulo;
 
+/**
+ * @author Michael David
+ *
+ */
 public interface SetupInteraction 
 {
 	public static final int EASY = 1; 
@@ -108,15 +109,20 @@ public interface SetupInteraction
 	
 	public String[] escolherEngenheiro(Jogador jogadorAtual,int quantitdadeEngenheiro);	/**escolhe uma quantidade de engenheiros de qualquer mesa do jogador, retornando os nomes do engenheiros*/
 	
+	//#ifdef ConceptCard
 	public void exibirQuantidadeBeneficio(int quantidade);			/**exibe GUI informando a quantidade de efeito a receber*/
+	//#endif
 
+	//#ifdef ConceptCard
 	public void exibirEfeitoinserido(Jogador jogadorAtual,CartaBonificacao cartaUtilizada); /**exibe GUI informando que houve a inserção de conceito*/
+	//#endif
 
 	public void exibirEfeitoinserido(Jogador jogadorAtual, Jogador jogadorAlvo, CartaPenalizacao cartaUtilizada, boolean condicaoSatisfeita); /**exibe GUI informando que houve a inserção de problema*/
 
 	
-	
+	//#ifdef ConceptCard
 	public int[] inserirCartasConceitoSelecionadas();
+	//#endif
 
 	public int[] inserirCartasProblemaSelecionadas();
 

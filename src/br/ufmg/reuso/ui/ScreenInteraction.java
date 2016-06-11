@@ -13,7 +13,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
+//#ifdef ConceptCard
 import br.ufmg.reuso.negocio.carta.CartaBonificacao;
+//#endif
 import br.ufmg.reuso.negocio.carta.CartaPenalizacao;
 import br.ufmg.reuso.negocio.carta.CartaoProjeto;
 import br.ufmg.reuso.negocio.jogador.Jogador;
@@ -529,12 +531,14 @@ public class ScreenInteraction implements SetupInteraction {
 
 	}
 
+	//#ifdef ConceptCard
 	@Override
 	public void exibirEfeitoinserido(Jogador jogadorAtual,
 			CartaBonificacao cartaUtilizada) {
 		// TODO Auto-generated method stub
 
 	}
+	//#endif
 
 	@Override
 	public void exibirEfeitoinserido(Jogador jogadorAtual, Jogador jogadorAlvo,
@@ -543,6 +547,7 @@ public class ScreenInteraction implements SetupInteraction {
 
 	}
 
+	//#ifdef ConceptCard
 	@Override
 	public int[] inserirCartasConceitoSelecionadas() /**
 	 * insere quais tipos de
@@ -564,6 +569,7 @@ public class ScreenInteraction implements SetupInteraction {
 
 		return out;
 	}
+	//#endif
 
 	@Override
 	public int[] inserirCartasProblemaSelecionadas() /**

@@ -20,7 +20,9 @@ import br.ufmg.reuso.negocio.baralho.factory.CreatorBaralhoArtefatos;
 import br.ufmg.reuso.negocio.carta.Artefato;
 import br.ufmg.reuso.negocio.carta.CardsConstants;
 import br.ufmg.reuso.negocio.carta.Carta;
+//#ifdef ConceptCard
 import br.ufmg.reuso.negocio.carta.CartaBonificacao;
+//#endif
 import br.ufmg.reuso.negocio.carta.CartaEngenheiro;
 import br.ufmg.reuso.negocio.carta.CartaPenalizacao;
 import br.ufmg.reuso.negocio.carta.CartaoProjeto;
@@ -115,7 +117,9 @@ public final class Jogo {
 													// configurar o jogo.
 													// Retorna 0 caso contrario
 		int dificuldade;
+		//#ifdef ConceptCard
 		int[] cartasConceito;
+		//#endif
 		int[] cartasProblema;
 
 		if (mode != ModeGameConstants.MODE_DEFAULT) // caso mode seja diferente
@@ -129,12 +133,16 @@ public final class Jogo {
 																	// na
 																	// variavel
 																	// dificuldade
+			//#ifdef ConceptCard
 			cartasConceito = setupController.inserirCartasConceitoSelecionadas();
+			//#endif
 			cartasProblema = setupController.inserirCartasProblemaSelecionadas();
 		} else {
 			dificuldade = SetupInteraction.HARD;
+			//#ifdef ConceptCard
 			cartasConceito = new int[1];
 			cartasConceito[0] = ModeGameConstants.ALL_CARDS_CONCEITO;
+			//#endif
 			cartasProblema = new int[1];
 			cartasProblema[0] = ModeGameConstants.ALL_CARDS_PROBLEMA;
 		}
@@ -149,13 +157,25 @@ public final class Jogo {
 																			// string
 		switch (dificuldade) {
 		case 1:
-			configurarJogo(FACIL, nomeJogadores, cartasConceito, cartasProblema);
+			configurarJogo(FACIL, nomeJogadores, 
+					//#ifdef ConceptCard
+					cartasConceito, 
+					//#endif
+					cartasProblema);
 			break;
 		case 2:
-			configurarJogo(MODERADO, nomeJogadores, cartasConceito, cartasProblema);
+			configurarJogo(MODERADO, nomeJogadores, 
+					//#ifdef ConceptCard
+					cartasConceito, 
+					//#endif
+					cartasProblema);
 			break;
 		case 3:
-			configurarJogo(DIFICIL, nomeJogadores, cartasConceito, cartasProblema);
+			configurarJogo(DIFICIL, nomeJogadores, 
+					//#ifdef ConceptCard
+					cartasConceito,
+					//#endif
+					cartasProblema);
 			break;
 		}
 		gameStatus = Status.CONTINUE;
@@ -189,7 +209,11 @@ public final class Jogo {
 
 	}
 
-	public void configurarJogo(String facilidade, String[] nomeJogadores, int[] cartasConceito, int[] cartasProblema) {
+	public void configurarJogo(String facilidade, String[] nomeJogadores, 
+			//#ifdef ConceptCard
+			int[] cartasConceito, 
+			//#endif
+			int[] cartasProblema) {
 
 		/* F�brica de Baralhos de Artefatos */
 		AbstractCreatorBaralhoArtefatos fabricaBaralhoArtefatos = new CreatorBaralhoArtefatos();
@@ -202,7 +226,11 @@ public final class Jogo {
 		projeto = new CartaoProjeto(facilidade);
 
 		// formarBaralhoCarta(facilidade,cartasConceito,cartasProblema);
-		this.baralhoCartas[BARALHO_PRINCIPAL] = new BaralhoCartas(facilidade, cartasConceito, cartasProblema);
+		this.baralhoCartas[BARALHO_PRINCIPAL] = new BaralhoCartas(facilidade, 
+				//#ifdef ConceptCard
+				cartasConceito, 
+				//#endif
+				cartasProblema);
 		this.baralhoCartas[BARALHO_AUXILIAR] = new BaralhoCartas(baralhoCartas[BARALHO_PRINCIPAL]);
 
 		// formarBaralhoArtefato();
@@ -1039,6 +1067,7 @@ public final class Jogo {
 
 	}
 
+	//#ifdef ConceptCard
 	public Jogador usarConceito(Jogador jogador, CartaBonificacao cartaUtilizada) {
 		switch (cartaUtilizada
 				.getTipoPrimeiroEfeito()) /**
@@ -1495,6 +1524,7 @@ public final class Jogo {
 		setupController.exibirEfeitoinserido(jogador, cartaUtilizada);
 		return jogador;
 	}
+	//#endif
 
 	public void insertArtifactByEffect(Jogador jogador, int quantidade, int tipoArtefato, int sorteado) {
 		String[] engenheiro = setupController.escolherEngenheiro(jogador, 1);
@@ -1819,8 +1849,10 @@ public final class Jogo {
 		Modulo[] pedido = null;
 		while (pedido == null) {
 			pedido = setupController.exibirTabelaInspecao(quantidadeArtefato, artefatosNotInspecionados);
+			//#ifdef ConceptCard
 			if (pedido == null)
 				setupController.exibirQuantidadeBeneficio(quantidadeArtefato);
+			//#endif
 		}
 
 		jogador.getTabuleiro().getMesas()[mesaTrabalho].virarArtefatos(pedido, baralhoArtefatosBons,
@@ -5825,8 +5857,8 @@ public final class Jogo {
 									 * habilidade ao final da rodada
 									 */
 			{
-				for (int i = 0; i < getJogadores()[j].getTabuleiro()
-						.getMesas().length; i++) /**
+				for (int i = 0; i < getJogadores()[j].getTabuleiro().getMesas().length; i++)
+													/**
 													 * 
 													 * 
 													 * percorrendo mesas do
@@ -5932,11 +5964,15 @@ public final class Jogo {
 
 	public void mockinit() {
 		String dificuldade = DIFICIL;
+		//#ifdef ConceptCard
 		int[] cartasConceito;
+		//#endif
 		int[] cartasProblema;
 
+		//#ifdef ConceptCard
 		cartasConceito = new int[1];
 		cartasConceito[0] = ModeGameConstants.ALL_CARDS_CONCEITO;
+		//#endif
 		cartasProblema = new int[1];
 		cartasProblema[0] = ModeGameConstants.ALL_CARDS_PROBLEMA;
 
@@ -5959,7 +5995,11 @@ public final class Jogo {
 		projeto = new CartaoProjeto(dificuldade);
 
 		// formarBaralhoCarta(facilidade,cartasConceito,cartasProblema);
-		this.baralhoCartas[BARALHO_PRINCIPAL] = new BaralhoCartas(dificuldade, cartasConceito, cartasProblema);
+		this.baralhoCartas[BARALHO_PRINCIPAL] = new BaralhoCartas(dificuldade, 
+				//#ifdef ConceptCard
+				cartasConceito, 
+				//#endif
+				cartasProblema);
 		this.baralhoCartas[BARALHO_AUXILIAR] = new BaralhoCartas(baralhoCartas[BARALHO_PRINCIPAL]);
 
 		// formarBaralhoArtefato();

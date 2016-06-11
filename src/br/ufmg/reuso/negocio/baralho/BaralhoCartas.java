@@ -21,7 +21,9 @@ import java.util.Random;
 
 import br.ufmg.reuso.dados.carta.RepositorioCarta;
 import br.ufmg.reuso.negocio.carta.Carta;
+//#ifdef ConceptCard
 import br.ufmg.reuso.negocio.carta.CartaBonificacao;
+//#endif
 import br.ufmg.reuso.negocio.carta.CartaEngenheiro;
 import br.ufmg.reuso.negocio.carta.CartaPenalizacao;
 import br.ufmg.reuso.negocio.jogo.Jogo;
@@ -33,7 +35,9 @@ public class BaralhoCartas
 	private int numeroTotalCartas;										// contem o número de cartas total do jogo 
 	private int numeroTotalEngenheiro;
 	private int numeroTotalProblemas;
+	//#ifdef ConceptCard
 	private int numeroTotalConceito;
+	//#endif
 	private int numeroCartasBaralhoAtual;								// contem o numero de cartas que o baralho tem no decorrer do jogo
 	private int currentCard;											/** índice da próxima carta a ser distribuída durante o jogo.*/
 
@@ -42,8 +46,11 @@ public class BaralhoCartas
 	 */
 	private RepositorioCarta repositorio = new RepositorioCarta();
 
-	public BaralhoCartas(String facilidade,int[] cartasConceito,int [] cartasProblema)
-	{
+	public BaralhoCartas(String facilidade,
+			//#ifdef ConceptCard
+			int[] cartasConceito,
+			//#endif
+			int [] cartasProblema) {
 
 		if(facilidade==Jogo.FACIL)
 		{
@@ -57,8 +64,10 @@ public class BaralhoCartas
 
 		if(facilidade==Jogo.DIFICIL)
 		{	
+			//#ifdef ConceptCard
 			CartaBonificacao [] cartaconceito;					//vetor que aloja cartas conceito do jogo
 			cartaconceito = inicializarCartasConceito(ModeGameConstants.PATH_CARTA_CONCEITO_DIFICIL,cartasConceito);
+			//#endif
 
 			CartaPenalizacao[] cartaproblema;					//vetor de todas as cartas problema
 			cartaproblema = inicializarCartasProblemas(ModeGameConstants.PATH_CARTA_PROBLEMA_DIFICIL,cartasProblema);
@@ -67,7 +76,13 @@ public class BaralhoCartas
 			cartaengenheiro = inicializarCartasEngenheiro(ModeGameConstants.PATH_CARTA_ENGENHEIRO_DIFICIL);
 
 			this.currentCard=0;																				/**configura currentCard como primeira carta retirada do baralho ser na posicao 0*/
-			setNumeroTotalCartas(getNumeroTotalConceito() + getNumeroTotalProblemas() + getNumeroTotalEngenheiro()); // contem o número de cartas total do jogo = soma de cartas de: conceito, engenheiro e problemas
+			// contem o número de cartas total do jogo = soma de cartas de: conceito, engenheiro e problemas
+			setNumeroTotalCartas(getNumeroTotalProblemas()
+					//#ifdef ConceptCard
+					+ getNumeroTotalConceito() 
+					//#endif
+					+ getNumeroTotalEngenheiro());
+			
 			baralho = new Carta[getNumeroTotalCartas()];													//contruindo baralho com número de cartas na pasta correspondente ao tipo de jogo
 			setNumeroCartasBaralhoAtual(getNumeroTotalCartas());											//numero de cartas no baralho inicialmente é igual ao total de cartas no jogo
 
@@ -78,6 +93,7 @@ public class BaralhoCartas
 					baralho[i]=cartaengenheiro[i];															//preenchendo as primeiras posições com cartas de engenheiro de software 
 				else
 				{
+					//#ifdef ConceptCard
 					if(j<getNumeroTotalConceito())
 					{
 						baralho[i]=cartaconceito[j];													//preenchendo a parte do meio do baralho com cartas conceito
@@ -85,9 +101,12 @@ public class BaralhoCartas
 					}
 					else
 					{
+					//#endif
 						baralho[i]=cartaproblema[k];													//preenchendo a parte final do baralho com cartas de problema
 						k++;
+					//#ifdef ConceptCard
 					}
+					//#endif
 				}
 			}
 		}
@@ -100,7 +119,9 @@ public class BaralhoCartas
 		setNumeroTotalCartas(baralhoInicial.getNumeroTotalCartas());	/**o baralho construído tem o mesmo número de cartas do baralhoInicial*/
 		setNumeroTotalEngenheiro(0);
 		setNumeroTotalProblemas(0);
+		//#ifdef ConceptCard
 		setNumeroTotalConceito(0);
+		//#endif
 		setNumeroCartasBaralhoAtual(0);									/**o baralho não contém nenhuma carta quando construído*/
 		this.currentCard = 0;
 		this.baralho = new Carta [getNumeroTotalCartas()];
@@ -108,6 +129,7 @@ public class BaralhoCartas
 			baralho[i]=null;											/**logo, não existe cartas no baralho */
 	}
 
+	//#ifdef ConceptCard
 	public CartaBonificacao[] inicializarCartasConceito(String dificuldade, int[] cartasConceitoSelecionadas)
 	{
 		/**
@@ -146,7 +168,9 @@ public class BaralhoCartas
 		}
 		return cartaconceito;
 	}
+	//#endif
 
+	//#ifdef ConceptCard
 	public boolean selecionarCartaConceito  (int [] cartasConceitoSelecionadas, String cartaAtual)
 	{
 		for (int i=0;i<cartasConceitoSelecionadas.length;i++)
@@ -168,6 +192,7 @@ public class BaralhoCartas
 		}
 		return false;
 	}
+	//#endif
 
 	public CartaPenalizacao[] inicializarCartasProblemas(String dificuldade,int [] cartasProblemaSelecionadas)
 	{
@@ -183,7 +208,7 @@ public class BaralhoCartas
 				somenteArquivosProperties.add(arquivosDiretorio[i]);			/**adciona arquivo à lista de array de arquivos properties conforme cartas selecionadas para o jogo*/
 		}
 
-		setNumeroTotalProblemas(somenteArquivosProperties.size());				/**numero de cartas conceito total que o baralho terá*/
+		setNumeroTotalProblemas(somenteArquivosProperties.size());				/**numero de cartas problema total que o baralho terá*/
 
 		CartaPenalizacao [] cartaproblema = new CartaPenalizacao[getNumeroTotalProblemas()];	/**vetor que aloja cartas problema do jogo*/
 
@@ -375,16 +400,20 @@ public class BaralhoCartas
 	}
 
 
+	//#ifdef ConceptCard
 	public int getNumeroTotalConceito()
 	{
 		return numeroTotalConceito;
 	}
+	//#endif
 
 
+	//#ifdef ConceptCard
 	public void setNumeroTotalConceito(int numeroTotalConceito)
 	{
 		this.numeroTotalConceito = numeroTotalConceito;
 	}
+	//#endif
 
 
 	public int getNumeroCartasBaralhoAtual() 

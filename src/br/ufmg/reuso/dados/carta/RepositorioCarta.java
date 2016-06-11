@@ -3,12 +3,15 @@ package br.ufmg.reuso.dados.carta;
 import java.util.Properties;
 
 import br.ufmg.reuso.dados.RepositorioArquivo;
+//#ifdef ConceptCard
 import br.ufmg.reuso.negocio.carta.CartaBonificacao;
+//#endif
 import br.ufmg.reuso.negocio.carta.CartaEngenheiro;
 import br.ufmg.reuso.negocio.carta.CartaPenalizacao;
 
 public class RepositorioCarta extends RepositorioArquivo implements IRepositorioCarta {
 
+	//#ifdef ConceptCard
 	@Override
 	public CartaBonificacao obterCartaConceito(String nome) {
 
@@ -28,6 +31,7 @@ public class RepositorioCarta extends RepositorioArquivo implements IRepositorio
 
 		return c;
 	}
+	//#endif
 
 	@Override
 	public CartaPenalizacao obterCartaPenalizacao(String nome) {
