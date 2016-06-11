@@ -6,10 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-public class RepositorioArquivo {
+public class RepositorioArquivo implements IRepositorioArquivo{
 
 	private Properties arquivoProperties;
 
+	@Override
 	public Properties getArquivoProperties(String nome){
 		FileInputStream arquivo;
 		this.arquivoProperties = new Properties();
@@ -25,6 +26,7 @@ public class RepositorioArquivo {
 		return arquivoProperties;
 	}
 	
+	@Override
 	public String[] getNomeArquivosPasta(String nome){
 		File pastaCartasConceito = new File(nome);						
 		return pastaCartasConceito.list();	
