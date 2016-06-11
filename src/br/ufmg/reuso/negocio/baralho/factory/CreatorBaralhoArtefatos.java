@@ -7,17 +7,8 @@ import br.ufmg.reuso.negocio.jogo.ModeGameConstants;
 
 public class CreatorBaralhoArtefatos implements AbstractCreatorBaralhoArtefatos {
 	
-	private static CreatorBaralhoArtefatos uniqueInstance;
-
-	private CreatorBaralhoArtefatos() {
+	public CreatorBaralhoArtefatos() {
 		/* n�o h� necessidade de executar nada no construtor */
-	}
-
-	public static synchronized CreatorBaralhoArtefatos getInstance() {
-		if (uniqueInstance == null)
-			uniqueInstance = new CreatorBaralhoArtefatos();
-
-		return uniqueInstance;
 	}
 	
 	public BaralhoArtefatos getBaralho(String pTipoBaralho, Integer pNumeroArtefatosAtual) {

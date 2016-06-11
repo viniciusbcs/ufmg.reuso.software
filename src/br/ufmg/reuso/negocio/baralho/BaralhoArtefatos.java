@@ -3,6 +3,10 @@ package br.ufmg.reuso.negocio.baralho;
 import br.ufmg.reuso.negocio.carta.Artefato;
 import br.ufmg.reuso.negocio.jogo.Jogo;
 
+/**
+ * @author Marina
+ * trabalho de reuso de software 2016/1
+ */
 public abstract class BaralhoArtefatos {
 
 	/** controla o n�mero de artefatos que o baralho tem no decorrer do jogo */
