@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel>
+		<properties/>
+		<struct>
+			<and mandatory="true" name="SimulES_Game">
+				<description>
+					
+				</description>
+				<and mandatory="true" name="GameSetup">
+					<description>
+						
+					</description>
+					<feature mandatory="true" name="ChooseLevel">
+						<description>
+							
+						</description>
+					</feature>
+					<feature mandatory="true" name="CreateProject">
+						<description>
+							
+						</description>
+					</feature>
+				</and>
+				<feature mandatory="true" name="Project">
+					<description>
+						
+					</description>
+				</feature>
+				<and mandatory="true" name="Board">
+					<description>
+						
+					</description>
+					<feature mandatory="true" name="Artifacts">
+						<description>
+							
+						</description>
+					</feature>
+					<feature mandatory="true" name="Tables">
+						<description>
+							
+						</description>
+					</feature>
+					<feature mandatory="true" name="SeeProject">
+						<description>
+							
+						</description>
+					</feature>
+					<feature mandatory="true" name="SeeOponentBoard">
+						<description>
+							
+						</description>
+					</feature>
+				</and>
+				<and abstract="true" mandatory="true" name="DeckOfCards">
+					<description>
+						
+					</description>
+					<and abstract="true" mandatory="true" name="GameCards">
+						<description>
+							
+						</description>
+						<feature mandatory="true" name="SoftwareEngineer">
+							<description>
+								
+							</description>
+						</feature>
+						<feature mandatory="true" name="ProblemCard">
+							<description>
+								
+							</description>
+						</feature>
+						<feature name="ConceptCard">
+							<description>
+								
+							</description>
+						</feature>
+					</and>
+					<feature mandatory="true" name="ArtifactCards">
+						<description>
+							
+						</description>
+					</feature>
+				</and>
+				<and abstract="true" mandatory="true" name="SoftwareEngineerActions">
+					<description>
+						
+					</description>
+					<feature mandatory="true" name="InspectArtifact">
+						<description>
+							
+						</description>
+					</feature>
+					<feature mandatory="true" name="CreateArtifact">
+						<description>
+							
+						</description>
+					</feature>
+					<feature mandatory="true" name="CorrectArtifact">
+						<description>
+							
+						</description>
+					</feature>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
