@@ -27,8 +27,8 @@ public aspect LoggingAspect {
 	
 	before() : iniciouJogo() {
 		JOptionPane.showMessageDialog( null,					// posicao default, no centro da tela
-				"Início do Jogo - SimulES\n >> Grupo DGJM <<",	// mensagem a ser exibida
-				"[AS] - SimulES",					// titulo da janela
+				"Início do Jogo - SimulES\n >> Grupo G3 <<",	// mensagem a ser exibida
+				"[AS] - SimulES - G3",					// titulo da janela
 				JOptionPane.INFORMATION_MESSAGE);				// tipo do icone a ser exibido
 	}
 	
