@@ -119,6 +119,7 @@ public final class Jogo {
 		int dificuldade;
 		//#ifdef ConceptCard
 		int[] cartasConceito;
+		System.out.println("testeeee");
 		//#endif
 		int[] cartasProblema;
 

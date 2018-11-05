@@ -196,8 +196,8 @@ public class ScreenModo extends JDialog implements ActionListener {
 		scr.rootPane.setOpaque(true);
 		scr.pack();
 		scr.setTitle("Dificuldade");
-		scr.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		scr.addWindowListener(ScreenInteraction.getScreenInteraction().windowsExitGame());
+		//scr.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		//scr.addWindowListener(ScreenInteraction.getScreenInteraction().windowsExitGame());
 		scr.setModal(true);
 		scr.setLocationRelativeTo(null);
 		scr.setVisible(true);

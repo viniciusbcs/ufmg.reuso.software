@@ -57,6 +57,9 @@ public class ScreenStart extends JDialog implements ActionListener {
 		int posY = (dimensionPanel.height / 5);
 
 		JButton buttonStart = new JButton("Start");
+		
+		buttonStart.setToolTipText("Botao para iniciar o jogo.");
+		
 		buttonStart.setMnemonic(KeyEvent.VK_S);
 
 		buttonStart.setActionCommand(startString);
