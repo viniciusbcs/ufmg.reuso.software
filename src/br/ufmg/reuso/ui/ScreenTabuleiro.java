@@ -3,7 +3,7 @@
  * Department of Computer Science
  * Simules-SPL Project
  *
- * Created by Alisson
+ * Created by Alisson - pam
  * Date: 18/07/2011
  * 
  * Tabuleiro do jogo SimulesSPL
@@ -181,7 +181,7 @@ public class ScreenTabuleiro extends JDialog {
 
 	// =====================================================================================//
 	/**
-	 * Pinta o painel com os botões de acesso geral do usuário
+	 * Printa o painel com os botões de acesso geral do usuário
 	 * 
 	 * @return JPanel contendo o container base do tabuleiro
 	 * 
@@ -199,12 +199,13 @@ public class ScreenTabuleiro extends JDialog {
 		jpanel.setLayout(null);
 
 		JButton buttonTabuleiro = new JButton(
-				(oponent == null ? "<html><Center>Ver Tabuleiro do Oponente"
+				(oponent == null ? "<html><Center>Ver Tabuleiro do(s) Oponente(s)"
 						: "<html><Center>Voltar para seu tabuleiro."));
 		buttonTabuleiro.setActionCommand("Ver Tabuleiro do Oponente");
 		buttonTabuleiro.addActionListener(getActionButtonPanel());
 
 		JButton buttonProjeto = new JButton("<html><Center>Ver Projeto");
+		buttonProjeto.setToolTipText("Ver projeto de software que está sendo utilizado");
 		buttonProjeto.setActionCommand("Ver Projeto");
 		buttonProjeto.addActionListener(getActionButtonPanel());
 
@@ -217,6 +218,7 @@ public class ScreenTabuleiro extends JDialog {
 		}
 		buttonDados.setEnabled(jogadados);
 		buttonDados.setActionCommand("Jogar Dados");
+		buttonDados.setToolTipText("Jogue os dados para descobrir a quantidade de cartas que serão compradas nessa rodada");
 		buttonDados.addActionListener(getActionButtonPanel());
 
 		JButton buttonEnd = new JButton("<html><Center>Terminar Jogada");
@@ -310,7 +312,7 @@ public class ScreenTabuleiro extends JDialog {
 	// =====================================================================================//
 
 	/**
-	 * A função é responsável por pintar tanto as mesas com os engenheiros quanto
+	 * A função é responsável por printar tanto as mesas com os engenheiros quanto
 	 * os títulos destas
 	 * 
 	 * @return JPanel contendo as mesas com engenheiros e artefatos
@@ -455,6 +457,7 @@ public class ScreenTabuleiro extends JDialog {
 				buttonIntegrate.setActionCommand(Integer.toString(i));
 				buttonIntegrate.addActionListener(getActionIntegrate());
 				buttonIntegrate.setEnabled(oponent == null);
+				buttonIntegrate.setToolTipText("Integrar artefatos para a composição de módulo");
 
 				panelBoard.add(buttonIntegrate);
 
@@ -513,7 +516,8 @@ public class ScreenTabuleiro extends JDialog {
 			// label.setBorder(borderW);
 			panelBoard.add(label);
 
-			JButton btnEng = new JButton("Usar");
+			JButton btnEng = new JButton("Utilizar engenheiro");
+			btnEng.setToolTipText("Ver mais informações sobre o engenheiro");
 			y += height;
 			btnEng.setActionCommand(Integer.toString(mesa));
 			btnEng.addActionListener(getActionEnginer());
@@ -603,7 +607,7 @@ public class ScreenTabuleiro extends JDialog {
 	// =====================================================================================//
 
 	/**
-	 * Métod responsável por pintar as cartas no tabuleiro
+	 * Métod responsável por printar as cartas no tabuleiro
 	 * 
 	 * @return JPanel que pinta as cartas no tabuleiro.
 	 */
@@ -649,7 +653,7 @@ public class ScreenTabuleiro extends JDialog {
 
 				height = Mydim.height * 10 / 100;
 				JButton btnUse = new JButton("Usar");
-				btnUse.setName("Usar");
+				btnUse.setName("Usar2");
 				btnUse.setBounds(x, y, width, height);
 				btnUse.setActionCommand(Integer.toString(i));
 				btnUse.addActionListener(getActionButtonCard());
@@ -1080,4 +1084,3 @@ public class ScreenTabuleiro extends JDialog {
 // =====================================================================================//
 // Fim da classe ScreenTabuleiro
 // =====================================================================================//
-

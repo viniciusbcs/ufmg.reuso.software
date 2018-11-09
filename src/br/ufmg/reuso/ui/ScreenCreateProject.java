@@ -140,12 +140,14 @@ public class ScreenCreateProject extends JDialog implements ActionListener {
 		group.add(checaG);
 	    
 		textJogadores.get(0).setSize(dim.width+50, dim.height);
+		textJogadores.get(0).setText("PR8");
 		textJogadores.get(1).setSize(dim.width+50, dim.height);
 		area.setSize(dim.width+50, dim.height+50);
 		
 		
 		
-		JButton buttonOk = new JButton("OK");
+		JButton buttonOk = new JButton("Criar");
+		buttonOk.setToolTipText("Criar projeto");
 		buttonOk.addActionListener(this);
 		buttonOk.setBounds(250, 8 * 30 + 10, 80, 25);
 		panel.add(buttonOk);

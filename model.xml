@@ -6,6 +6,7 @@
             <and mandatory="true" name="GameSetup">
                 <feature mandatory="true" name="ChooseLevel"/>
                 <feature name="CreateProject"/>
+                <feature name="Timer"/>
             </and>
             <feature mandatory="true" name="Project"/>
             <and mandatory="true" name="Board">

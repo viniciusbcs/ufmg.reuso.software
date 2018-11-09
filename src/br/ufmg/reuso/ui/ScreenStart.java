@@ -69,7 +69,7 @@ public class ScreenStart extends JDialog implements ActionListener {
 
 		posY = (3 * (dimensionPanel.height / 5)) - (dimensionButton.height);
 
-		JButton buttonConfig = new JButton("Configurações");
+		JButton buttonConfig = new JButton("Dificuldade");
 		buttonConfig.setMnemonic(KeyEvent.VK_C);
 		buttonConfig.setActionCommand(configString);
 		buttonConfig.setPreferredSize(dimensionButton);
@@ -78,23 +78,31 @@ public class ScreenStart extends JDialog implements ActionListener {
 
 		posY = (4 * (dimensionPanel.height / 5)) - (dimensionButton.height);
 		
+		
+		//#ifdef CreateProject
 		JButton buttonProjeto = new JButton("Criar Projeto");
 		buttonProjeto.setMnemonic(KeyEvent. VK_P);
 		buttonProjeto.setActionCommand(criarProjetoString);
 		buttonProjeto.setPreferredSize(dimensionButton);
 		buttonProjeto.setBounds(posX, posY, dimensionButton.width,
 				dimensionButton.height);
-
+		//#endif
 
 		// Registra os objetos no controle de eventos.
 		
 		buttonStart.addActionListener(this);
 		buttonConfig.addActionListener(this);
+		
+		//#ifdef CreateProject
 		buttonProjeto.addActionListener(this);
-
+		//#endif
+		
 		Tpanel.add(buttonStart);
 		Tpanel.add(buttonConfig);
+		
+		//#ifdef CreateProject
 		Tpanel.add(buttonProjeto);
+		//#endif
 		add(Tpanel);
 
 		getRootPane().setDefaultButton(buttonStart);
