@@ -9,8 +9,10 @@
 
 package br.ufmg.reuso.negocio.jogo;
 
+
 import java.util.ArrayList;
 import java.util.Random;
+
 
 import br.ufmg.reuso.negocio.baralho.BaralhoArtefatosBons;
 import br.ufmg.reuso.negocio.baralho.BaralhoArtefatosRuins;
@@ -32,6 +34,7 @@ import br.ufmg.reuso.negocio.mesa.Mesa;
 import br.ufmg.reuso.negocio.mesa.Modulo;
 import br.ufmg.reuso.negocio.tabuleiro.SetupInteraction;
 import br.ufmg.reuso.negocio.tabuleiro.Tabuleiro;
+import br.ufmg.reuso.negocio.tempo.Temporizador;
 import br.ufmg.reuso.ui.ScreenInteraction;
 /**
  * @author Michael David
@@ -66,10 +69,13 @@ public final class Jogo {
 	private BaralhoArtefatosBons[] baralhoArtefatosBons;
 	private BaralhoArtefatosRuins[] baralhoArtefatosRuins;
 	public SetupInteraction setupController = ScreenInteraction.getScreenInteraction();
+	
+	private Temporizador temporizador;
 
+		
 	private Jogo() {
 	}
-
+	
 	public Jogador[] getJogadores() {
 		return jogadores;
 	}
@@ -101,7 +107,7 @@ public final class Jogo {
 	public BaralhoArtefatosRuins[] getBaralhoArtefatosRuins() {
 		return baralhoArtefatosRuins;
 	}
-
+	
 	public static Jogo getJogo() {
 		if (jogo == null) {
 			System.out.println("criando jogo");
@@ -121,6 +127,11 @@ public final class Jogo {
 		int[] cartasConceito;
 		//#endif
 		int[] cartasProblema;
+
+		// inicializa o timer - precisa de correcoes
+		// temporizador = Temporizador.getTemporizador(mode);
+		//temporizador.start();
+		//System.out.println(String.valueOf(temporizador.secondsPassed));
 		
 		
 		dificuldade = SetupInteraction.EASY;
@@ -192,6 +203,7 @@ public final class Jogo {
 		int jogador = 0;
 		jogo.init();
 
+
 		while (getGameStatus() == Status.CONTINUE) // ** Enquanto o status do
 													// jogo for continuar, esse
 													// metodo e executado*//*
@@ -201,6 +213,8 @@ public final class Jogo {
 																				// default
 																				// do
 																				// jogador
+			//Aqui a acontece a troca do jogador e o temporizador deve ser reiniciado
+			// temporizador = Temporizador.getTemporizador(mode);
 			System.out.println("TROCANDO DE JOGADOR");																	// i*//*
 			diminuirDuracaoEfeitosTemporario(jogador);
 			jogador++; // **Acrescentando jogador, ha a troca de jogador *//*
@@ -6023,3 +6037,6 @@ public final class Jogo {
 	}
 
 }
+
+
+

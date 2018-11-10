@@ -63,7 +63,7 @@ public class ScreenTabuleiro extends JDialog {
 
 	// Variáveis globais
 	private static final long serialVersionUID = 2797977843067840264L;
-
+	
 	// Paineis
 	JPanel panelBase;
 	JPanel panelButtonsLeft;
@@ -71,7 +71,6 @@ public class ScreenTabuleiro extends JDialog {
 	JPanel panelMesas;
 	JPanel panelCartas;
 	JPanel panelTabuleiro;
-
 	//Border border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
 
 	Color colorBack = Color.LIGHT_GRAY;
@@ -226,7 +225,7 @@ public class ScreenTabuleiro extends JDialog {
 		buttonEnd.addActionListener(getActionButtonPanel());
 		buttonEnd.setEnabled(oponent == null);
 		
-		
+		// Label que representa o temporizador no tabuleiro
 		JLabel labelTimer = new JLabel();
 		labelTimer.setText("Timer: X");
 		

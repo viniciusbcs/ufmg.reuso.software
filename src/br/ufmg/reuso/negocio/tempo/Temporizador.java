@@ -4,21 +4,32 @@ import java.util.Timer;
 
 import java.util.TimerTask;
 
-public class Temp {
+import br.ufmg.reuso.negocio.jogo.Jogo;
+
+public class Temporizador {
 	
+	private static Temporizador temporizador;
 	private int numeroRetorno = 1;
 	private int mode;
-	int secondsPassed = 0;
+	public int secondsPassed = 0;
 	
 	Timer myTimer = new Timer();
 	
-	TimerTask task = new TimerTask() {
-		public void run() {
-			secondsPassed++;
-		}
-	};
+	TimerTask task;
 	
-	public int start() {
+	private Temporizador() {
+		
+	}
+	
+	public static Temporizador getTemporizador(int mode) {
+		if (temporizador == null) {
+			temporizador = new Temporizador();
+		}
+		temporizador.setMode(mode);
+		return temporizador;
+	}
+	
+	public void start() {
 		if(getMode() == 0) {
 			myTimer.scheduleAtFixedRate(task, 1000, 120);
 		}else if (getMode() == 1) {
@@ -26,7 +37,11 @@ public class Temp {
 		}else if(getMode() == 2) {
 			myTimer.scheduleAtFixedRate(task, 1000, 60);
 		}	
-		return this.numeroRetorno;
+		task = new TimerTask() {
+			public void run() {
+				secondsPassed++;
+			}
+		};
 	}
 			
 	// Escolher de acordo com o modo do jogo
