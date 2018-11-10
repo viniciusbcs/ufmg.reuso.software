@@ -225,13 +225,17 @@ public class ScreenTabuleiro extends JDialog {
 		buttonEnd.setActionCommand("Terminar Jogada");
 		buttonEnd.addActionListener(getActionButtonPanel());
 		buttonEnd.setEnabled(oponent == null);
-
+		
+		
+		JLabel labelTimer = new JLabel();
+		labelTimer.setText("Timer: X");
+		
 		
 		//Define posições
 		int x, y, width, height, ygap, numButtons;
 		x = y = width = height = ygap = numButtons = 0;
 
-		numButtons = 4;
+		numButtons = 5;
 		width = myDim.width * 90 / 100;
 		x = (myDim.width - width) / 2;
 		ygap = (myDim.height) / ((2*numButtons)+1);
@@ -248,11 +252,15 @@ public class ScreenTabuleiro extends JDialog {
 		y += ygap + height;
 		buttonEnd.setBounds(x, y, width, height);
 		
+		y += ygap + height;
+		labelTimer.setBounds(x, y, width, height);
+		
 		//Define Adiciona no painel
 		jpanel.add(buttonTabuleiro);
 		jpanel.add(buttonProjeto);
 		jpanel.add(buttonDados);
 		jpanel.add(buttonEnd);
+		jpanel.add(labelTimer);
 
 
 		return jpanel;

@@ -1,4 +1,4 @@
-package br.ufmg.reuso.negocio.temp;
+package br.ufmg.reuso.negocio.tempo;
 
 import java.util.Timer;
 

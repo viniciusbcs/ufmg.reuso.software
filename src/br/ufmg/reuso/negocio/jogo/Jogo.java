@@ -119,10 +119,12 @@ public final class Jogo {
 		int dificuldade;
 		//#ifdef ConceptCard
 		int[] cartasConceito;
-		System.out.println("testeeee");
 		//#endif
 		int[] cartasProblema;
-
+		
+		
+		dificuldade = SetupInteraction.EASY;
+		 
 		if (mode != ModeGameConstants.MODE_DEFAULT) // caso mode seja diferente
 													// do default
 		{
@@ -139,15 +141,19 @@ public final class Jogo {
 			//#endif
 			cartasProblema = setupController.inserirCartasProblemaSelecionadas();
 		} else {
+			
 			dificuldade = SetupInteraction.HARD;
+			
 			//#ifdef ConceptCard
 			cartasConceito = new int[1];
 			cartasConceito[0] = ModeGameConstants.ALL_CARDS_CONCEITO;
 			//#endif
 			cartasProblema = new int[1];
 			cartasProblema[0] = ModeGameConstants.ALL_CARDS_PROBLEMA;
+			
 		}
-
+		
+	
 		String[] nomeJogadores = setupController.inserirNomesJogadores(); // insere
 																			// nome
 																			// dos
@@ -195,7 +201,7 @@ public final class Jogo {
 																				// default
 																				// do
 																				// jogador
-																				// i*//*
+			System.out.println("TROCANDO DE JOGADOR");																	// i*//*
 			diminuirDuracaoEfeitosTemporario(jogador);
 			jogador++; // **Acrescentando jogador, ha a troca de jogador *//*
 			if (jogador >= getJogadores().length) // **Caso jogador ultrapasse
